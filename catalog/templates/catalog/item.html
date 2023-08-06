@@ -1,0 +1,26 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+{% load tegs %}
+
+<div class="row text-center">
+
+    <div class="col-12">
+        <div class="card mb-12 box-shadow">
+            <div class="card-header">
+                <h5 class="my-0 font-weight-normal">категория: {{ item.category }}</h5>
+                <h2 class="my-1 font-weight-bold">{{item.title}}</h2>
+            </div>
+            <div class="card-body">
+
+                <h1 class="card-title pricing-card-title">$ {{ item.price }}</h1>
+                <div class="row">
+                    <div class="col-6">{{ item.description }}</div>
+                    <div class="col-6"><img src="{% mediapath item.picture %}"/></div>
+                </div>
+
+                <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

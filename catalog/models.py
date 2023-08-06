@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Product(models.Model):
-    title = models.CharField(max_length=100, verbose_name="наименование")
+    title = models.CharField(max_length=100, verbose_name="наименование", unique=True)
     description = models.CharField(max_length=500, verbose_name="описание")
     picture = models.ImageField(verbose_name="изображение (превью)")
     category = models.ForeignKey("Category", on_delete=models.CASCADE)
@@ -15,9 +15,8 @@ class Product(models.Model):
 
 
 class Category(models.Model):
-    title = models.CharField(max_length=100, verbose_name="наименование")
+    title = models.CharField(max_length=100, verbose_name="наименование", unique=True)
     description = models.CharField(max_length=500, verbose_name="описание")
-    #created_at = models.DateTimeField(verbose_name="дата создания", default=date.fromisoformat("2023-01-01"))
 
     def __str__(self):
         return self.title
@@ -33,4 +32,4 @@ class UserContact(models.Model):
 
 
 class Supplier(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Компания")
+    name = models.CharField(max_length=100, verbose_name="Компания", unique=True)
