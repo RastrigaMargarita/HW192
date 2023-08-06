@@ -6,16 +6,7 @@ def index(request):
     """Отображаем первую страницу, выводим первые три продукта в карточки, если база данных не пуста"""
 
     try:
-        item_count = 0
-        products_list_3 = {}
-        for item in Product.objects.all():
-            item_count += 1
-            products_list_3[f"title{item_count}"] = item.title
-            products_list_3[f"price{item_count}"] = item.price
-            products_list_3[f"description{item_count}"] = item.description
-            if item_count > 3:
-                break
-        return render(request, "catalog/index.html", context=products_list_3)
+        return render(request, "catalog/index.html", context={"object_list": Product.objects.all()})
     except Exception:
         return render(request, "catalog/index.html")
 
@@ -29,3 +20,8 @@ def contacts_post(request):
                                    message=request.POST.get('message'))
 
     return render(request, 'catalog/contacts.html')
+
+def item(request, item_id):
+    """Показывам карточку товара"""
+
+    return render(request, 'catalog/item.html', {'item': Product.objects.get(id=item_id)})
