@@ -1,27 +1,28 @@
 from django.shortcuts import render
-from catalog.models import UserContact, Product
+from django.urls import reverse_lazy
+from django.views.generic import ListView, TemplateView, DetailView, CreateView
+
+from catalog.models import Usercontact, Product
 
 
-def index(request):
+class Index(TemplateView):
     """Отображаем первую страницу, выводим первые три продукта в карточки, если база данных не пуста"""
+    template_name = 'catalog/index.html'
 
-    try:
-        return render(request, "catalog/index.html", context={"object_list": Product.objects.all()})
-    except Exception:
-        return render(request, "catalog/index.html")
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['product_list'] = Product.objects.all()[:3]
+        return context_data
 
 
-def contacts_post(request):
+class UsercontactCreateView(CreateView):
     """Передаем в базу данных то что прислал пользователь"""
+    model = Usercontact
+    fields = ('name', 'phone', 'message',)
+    success_url = reverse_lazy('index')
 
-    if request.method == 'POST':
-        UserContact.objects.create(name=request.POST.get('name'),
-                                   phone=request.POST.get('phone'),
-                                   message=request.POST.get('message'))
 
-    return render(request, 'catalog/contacts.html')
-
-def item(request, item_id):
+class ProductDetailView(DetailView):
     """Показывам карточку товара"""
-
-    return render(request, 'catalog/item.html', {'item': Product.objects.get(id=item_id)})
+    model = Product
+    template_name = 'catalog/product_detail.html'

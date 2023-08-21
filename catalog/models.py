@@ -9,6 +9,7 @@ class Product(models.Model):
     price = models.IntegerField(verbose_name="цена за покупку")
     creation_date = models.DateTimeField(verbose_name="дата создания")
     last_changing_date = models.DateTimeField(verbose_name="дата последнего изменения")
+    slug = models.SlugField(max_length=255, verbose_name="slug")
 
     def __str__(self):
         return self.title
@@ -22,7 +23,7 @@ class Category(models.Model):
         return self.title
 
 
-class UserContact(models.Model):
+class Usercontact(models.Model):
     name = models.CharField(max_length=50, verbose_name="Имя")
     phone = models.CharField(max_length=50, verbose_name="Телефон")
     message = models.TextField(verbose_name="Сообщение")
