@@ -11,3 +11,4 @@ class Blog(models.Model):
     views_number = models.IntegerField(null=True)
     comments = models.TextField(null=True)
 
+
