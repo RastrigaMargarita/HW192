@@ -7,7 +7,7 @@ from blog.models import Blog
 
 class BlogCreateView(CreateView):
     model = Blog
-    fields = ('title', 'content', 'preview', 'publication_date', 'published', 'views_number')
+    fields = ('title', 'content', 'preview', 'published')
     success_url = reverse_lazy('blog_list')
 
     def form_valid(self, form):
@@ -29,7 +29,7 @@ class BlogListVew(ListView):
 
 class BlogUpdateView(UpdateView):
     model = Blog
-    fields = ('title', 'slug', 'content', 'preview', 'publication_date', 'published', 'views_number')
+    fields = ('title', 'slug', 'content', 'preview', 'published')
 
     def form_valid(self, form):
         if form.is_valid():
