@@ -14,12 +14,28 @@
                 <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                     <li>{{ product.description|slice:100 }}</li>
                 </ul>
-                <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
+                <button type="button" class="btn btn-lg btn-block btn-outline-primary"><a
+                        href="product/{{ product.slug }}">Посмотреть</a></button>
             </div>
-
+            <div class="card-footer">{{product.active_version_number}} - {{product.active_version_name}}</div>
         </div>
     </div>
     {% endfor %}
+
+    <div class="col-4">
+        <div class="card mb-4 box-shadow" STYLE="height: 90%">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal " style="min-height: 1.2em;"></h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title"><a href="{% url 'product_create' %}">Добавить новый товар</a>
+                </h1>
+            </div>
+            <div class="card-footer" style="min-height: 1.2em"></div>
+        </div>
+    </div>
+
+    <hr>
     <h4 class="my-0 font-weight-normal"><a href="blog/">Наш блог</a></h4>
 </div>
 {% endblock %}

@@ -7,9 +7,9 @@ class Product(models.Model):
     picture = models.ImageField(verbose_name="изображение (превью)")
     category = models.ForeignKey("Category", on_delete=models.CASCADE)
     price = models.IntegerField(verbose_name="цена за покупку")
-    creation_date = models.DateTimeField(verbose_name="дата создания")
-    last_changing_date = models.DateTimeField(verbose_name="дата последнего изменения")
-    slug = models.SlugField(max_length=255, verbose_name="slug")
+    creation_date = models.DateTimeField(verbose_name="дата создания", auto_now_add=True)
+    last_changing_date = models.DateTimeField(verbose_name="дата последнего изменения", auto_now_add=True)
+    slug = models.SlugField(max_length=255, verbose_name="slug", db_index=True, unique=True)
 
     def __str__(self):
         return self.title
@@ -34,3 +34,13 @@ class Usercontact(models.Model):
 
 class Supplier(models.Model):
     name = models.CharField(max_length=100, verbose_name="Компания", unique=True)
+
+
+class Version(models.Model):
+    product = models.ForeignKey("Product", on_delete=models.CASCADE)
+    nomer = models.IntegerField(verbose_name="Номер версии")
+    version_title = models.CharField(verbose_name="Название версии")
+    current_version = models.BooleanField(verbose_name="Текущая версия", default=True)
+
+    def __str__(self):
+        return self.version_title
