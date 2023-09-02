@@ -1,0 +1,12 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+    <form method="post" class="card">
+        {% csrf_token %}
+
+        <p>Хотите удалить запись?</p>
+        <p class="form-buttons">
+            <input type="submit" class="btn btn-primary" value="Delete">
+            <a href="{% url 'blog_list' %}" class="btn btn-outline">Отмена</a>
+        </p>
+    </form>
+{% endblock %}
