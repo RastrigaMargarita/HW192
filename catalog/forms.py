@@ -19,7 +19,8 @@ class ProductForm(forms.ModelForm):
         cleaned_data = self.cleaned_data.get('title')
 
         for tested_word in denied_words:
-            print(tested_word)
+
             if tested_word in cleaned_data_lower_case:
                 raise forms.ValidationError(f"Нельзя использовать в наименовании слово {tested_word}")
+
         return cleaned_data

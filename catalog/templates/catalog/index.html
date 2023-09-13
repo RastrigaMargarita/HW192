@@ -28,8 +28,11 @@
                 <h4 class="my-0 font-weight-normal " style="min-height: 1.2em;"></h4>
             </div>
             <div class="card-body">
+                {% if user.is_authenticated %}
                 <h1 class="card-title pricing-card-title"><a href="{% url 'product_create' %}">Добавить новый товар</a>
+
                 </h1>
+                {% endif %}
             </div>
             <div class="card-footer" style="min-height: 1.2em"></div>
         </div>
