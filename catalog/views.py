@@ -75,7 +75,9 @@ class ProductCreateView(CreateView):
         if form.is_valid():
             new_product = form.save()
             new_product.slug = slugify(new_product.title)
+            new_product.seller = self.request.user
             new_product.save()
+
             return super().form_valid(form)
 
 

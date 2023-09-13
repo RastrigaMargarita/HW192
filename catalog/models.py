@@ -1,5 +1,7 @@
 from django.db import models
 
+from config import settings
+
 
 class Product(models.Model):
     title = models.CharField(max_length=100, verbose_name="наименование", unique=True)
@@ -10,6 +12,8 @@ class Product(models.Model):
     creation_date = models.DateTimeField(verbose_name="дата создания", auto_now_add=True)
     last_changing_date = models.DateTimeField(verbose_name="дата последнего изменения", auto_now_add=True)
     slug = models.SlugField(max_length=255, verbose_name="slug", db_index=True, unique=True)
+    seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, verbose_name='продавец', null=True,
+                               blank=True)
 
     def __str__(self):
         return self.title
