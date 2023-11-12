@@ -19,11 +19,11 @@ class ProductForm(forms.ModelForm):
         cleaned_data = self.cleaned_data.get('title')
 
         for tested_word in denied_words:
-
             if tested_word in cleaned_data_lower_case:
                 raise forms.ValidationError(f"Нельзя использовать в наименовании слово {tested_word}")
 
         return cleaned_data
+
 
 class VersionForm(forms.ModelForm):
     class Meta:
@@ -34,4 +34,4 @@ class VersionForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             if field_name != 'current_version':
-               field.widget.attrs['class'] = 'form-control'
+                field.widget.attrs['class'] = 'form-control'

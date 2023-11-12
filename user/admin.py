@@ -9,4 +9,4 @@ class CountriesAdmin(admin.ModelAdmin):
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'avatar', 'telephone', 'country')
+    list_display = ('id', 'email', 'avatar', 'telephone', 'country')

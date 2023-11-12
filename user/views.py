@@ -17,6 +17,20 @@ class RegisterView(CreateView):
     template_name = 'user/register.html'
     success_url = reverse_lazy('user:login')
 
+    def form_valid(self, form):
+        if form.is_valid():
+            email_to_send = self.request.POST.get('email')
+            print("почта " + email_to_send)
+            send_mail(
+                'Вы зарегистрировались в Megamarket',
+                f'Добро пожаловать на портал!',
+                'RME1C@mail.ru',
+                [email_to_send],
+                fail_silently=False,
+            )
+            print("почту отправил")
+            return super().form_valid(form)
+
 
 class ProfileView(UpdateView):
     model = User
@@ -34,7 +48,6 @@ class SendPasswordView(TemplateView):
 
     def post(self, request):
         email_to_send = request.POST.get('email')
-        print(request)
 
         characters = string.ascii_letters + string.digits + string.punctuation
         password = ''.join(random.choice(characters) for _ in range(8))
@@ -50,6 +63,5 @@ class SendPasswordView(TemplateView):
         user_details = User.objects.get(email=email_to_send)
         user_details.set_password(password)
         user_details.save()
-        print(user_details.password)
 
         return render(request, self.template_name)
