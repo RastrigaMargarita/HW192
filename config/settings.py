@@ -135,6 +135,15 @@ LOGOUT_REDIRECT_URL = "/"
 EMAIL_HOST = 'smtp.mail.ru'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'rme1C@mail.ru'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = 'CcgfzMk2dYYhhfmgaBLK'
 DEFAULT_FROM_EMAIL = 'RME1C@mail.ru'
+#EMAIL_USE_TLS = True
 EMAIL_USE_SSL = True
+
+
+#EMAIL_HOST = 'smtp.aol.com'
+#EMAIL_PORT = 465
+#EMAIL_HOST_USER = 'webrastr@aol.com'
+#EMAIL_HOST_PASSWORD = '3B&&4&be>%4uu;T'
+#DEFAULT_FROM_EMAIL = ''
+#EMAIL_USE_SSL = True
