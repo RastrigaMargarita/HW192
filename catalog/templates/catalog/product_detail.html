@@ -26,8 +26,10 @@
                                 <div>{{ version.nomer }} - {{ version.version_title }}
                                 </div>
                                 {% endfor %}
+                                {% if object.seller == user %}
                                 <button type="button" class="btn btn-lg btn-block btn-outline-primary"><a
-                        href="{% url 'version_create' product.slug %}">Добавить версию</a></button>
+                                        href="{% url 'version_create' product.slug %}">Добавить версию</a></button>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

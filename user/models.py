@@ -16,3 +16,6 @@ class User(AbstractUser):
 
 class Countries(models.Model):
     title = models.CharField(max_length=15, verbose_name="Country", unique=True)
+
+    def __str__(self):
+        return self.title
