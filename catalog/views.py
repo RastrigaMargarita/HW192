@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
 
-from catalog.forms import ProductForm
+from catalog.forms import ProductForm, VersionForm
 from catalog.models import Usercontact, Product, Version
 
 
@@ -42,10 +42,9 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        version_list = Version.objects.all()
+        version_list = Version.objects.filter(product=context_data['object'])
 
-        context_data['version_list'] = [version for version in version_list if
-                                        version.product == context_data['object']]
+        context_data['version_list'] = version_list
         return context_data
 
 
@@ -72,6 +71,7 @@ class ProductCreateView(CreateView):
     success_url = reverse_lazy('index')
 
     def form_valid(self, form):
+        print('sldkfj')
         if form.is_valid():
             new_product = form.save()
             new_product.slug = slugify(new_product.title)
@@ -85,3 +85,31 @@ class ProductDeleteView(DeleteView):
     """Вью для удаления продукта"""
     model = Product
     success_url = reverse_lazy('index')
+
+class VersionCreateView(CreateView):
+    """Вью для создания новой версии продукта"""
+    model = Version
+    form_class = VersionForm
+    template_name = 'catalog/version_create.html'
+    success_url = reverse_lazy('index')
+
+
+
+    def get_context_data(self, **kwargs):
+
+        data = super().get_context_data(**kwargs)
+        print('ja context data')
+        return data
+
+    def form_valid(self, form):
+        print("ja valid")
+        if form.is_valid():
+            new_version = form.save(commit=False)
+            print(Product.objects.get(slug = self.kwargs['slug']))
+            new_version.product = Product.objects.get(slug = self.kwargs['slug'])
+
+            new_version.save()
+
+            return super().form_valid(form)
+
+#initial={'product': Product.objects.get(slug='4')}

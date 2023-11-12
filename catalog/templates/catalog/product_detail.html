@@ -14,15 +14,26 @@
 
                 <h1 class="card-title pricing-card-title">$ {{ object.price }}</h1>
                 <div class="row">
-                    <div class="col-6">{{ object.description }}</div>
-                    <div class="col-6"><img src="{% mediapath object.picture %}"/></div>
+                    <div class="col-8"><img width="100%" src="{% mediapath object.picture %}"/></div>
+                    <div class="col-4">
+                        <div>
+                            {{ object.description }}
+                        </div>
+                        <div>
+                            <div class="card-footer">
+                                {% for version in version_list %}
+
+                                <div>{{ version.nomer }} - {{ version.version_title }}
+                                </div>
+                                {% endfor %}
+                                <button type="button" class="btn btn-lg btn-block btn-outline-primary"><a
+                        href="{% url 'version_create' product.slug %}">Добавить версию</a></button>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="card-footer">
-                    {% for version in version_list %}
-                    <div class="col-6">{{ version.nomer }} - {{ version.version_title }}</div>
-                    {% endfor %}
-                </div>
 
                 <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
                 {% if object.seller == user %}

@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.urls import path
 
 from catalog.views import Index, UsercontactCreateView, ProductDetailView, \
-    ProductUpdateView, ProductCreateView, ProductDeleteView
+    ProductUpdateView, ProductCreateView, ProductDeleteView, VersionCreateView
 
 urlpatterns = [
                   path('', Index.as_view(), name='index'),
@@ -12,6 +12,7 @@ urlpatterns = [
                   path('product/<slug:slug>/', ProductDetailView.as_view()),
                   path('product_create/', ProductCreateView.as_view(), name="product_create"),
                   path('product_update/<slug:slug>/', ProductUpdateView.as_view(), name="product_update"),
-                  path("blog_del/<slug:slug>/", ProductDeleteView.as_view(), name="product_delete")
+                  path('blog_del/<slug:slug>/', ProductDeleteView.as_view(), name="product_delete"),
+                  path('<slug:slug>/version_create/', VersionCreateView.as_view(), name="version_create"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
