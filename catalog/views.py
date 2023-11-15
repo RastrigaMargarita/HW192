@@ -102,9 +102,7 @@ class VersionCreateView(CreateView):
     def form_valid(self, form):
         if form.is_valid():
             new_version = form.save(commit=False)
-            print(Product.objects.get(slug=self.kwargs['slug']))
             new_version.product = Product.objects.get(slug=self.kwargs['slug'])
-
             new_version.save()
 
             return super().form_valid(form)
