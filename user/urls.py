@@ -5,7 +5,7 @@ from django.contrib.auth.views import LogoutView, LoginView
 from django.urls import path
 
 from user.apps import UserConfig
-from user.views import RegisterView, ProfileView, SendPasswordView
+from user.views import RegisterView, ProfileView, SendPasswordView, EnterCode
 
 app_name = UserConfig.name
 
@@ -16,5 +16,6 @@ urlpatterns = [
                   path('profile/', ProfileView.as_view(template_name="user/profile.html"), name='profile'),
                   path('send_password/', SendPasswordView.as_view(template_name="user/send_password.html"),
                        name='send_password'),
+                  path('code/', EnterCode.as_view(), name='code'),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

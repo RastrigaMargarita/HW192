@@ -24,3 +24,6 @@ class UserProfileForm(UserChangeForm):
 
 class SendPasswordForm(forms.Form):
     email = forms.EmailField(label="email", max_length=100)
+
+class EnterCodeForm(forms.Form):
+    code = forms.CharField(label="Код", max_length=4)
