@@ -14,6 +14,7 @@ class Product(models.Model):
     slug = models.SlugField(max_length=255, verbose_name="slug", db_index=True, unique=True)
     seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, verbose_name='продавец', null=True,
                                blank=True)
+    is_published = models.BooleanField(verbose_name="Опубликовано", default=False)
 
     def __str__(self):
         return self.title
