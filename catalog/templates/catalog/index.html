@@ -29,10 +29,16 @@
             </div>
             <div class="card-body">
                 {% if user.is_authenticated %}
+                {% for group in request.user.groups.all %}
+                {% if group.name == 'Seller' %}
+
                 <h1 class="card-title pricing-card-title"><a href="{% url 'product_create' %}">Добавить новый товар</a>
 
                 </h1>
                 {% endif %}
+                {% endfor %}
+                {% endif %}
+
             </div>
             <div class="card-footer" style="min-height: 1.2em"></div>
         </div>

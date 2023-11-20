@@ -35,15 +35,25 @@
                     </div>
 
                 </div>
-
-
-                {% if object.seller == user %}
+                {% for group in request.user.groups.all %}
+                {% if group.name == 'Buyer' %}
                 <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
+                {% endif %}
+                {% endfor %}
+                {% if object.seller == user %}
                 <button type="button" class="btn btn-lg btn-block btn-outline-primary"><a
                         href="{% url 'product_update' product.slug %}">Обновить информацию</a></button>
                 <button type="button" class="btn btn-lg btn-block btn-outline-primary"><a
                         href="{% url 'product_delete' product.slug %}">Удалить продукт</a></button>
                 {% endif %}
+                {% for group in request.user.groups.all %}
+                {% if group.name == 'Moderator' %}
+                <button type="button" class="btn btn-lg btn-block btn-outline-primary"><a
+                        href="{% url 'product_update_moderator' product.slug %}">Модерировать</a></button>
+
+                {% endif %}
+                {% endfor %}
+
             </div>
         </div>
     </div>

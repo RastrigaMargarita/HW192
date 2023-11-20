@@ -1,12 +1,13 @@
 from datetime import datetime
 
+from django import template
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
 
-from catalog.forms import ProductForm, VersionForm
+import user
+from catalog.forms import ProductForm, VersionForm, ProductFormForModerator
 from catalog.models import Usercontact, Product, Version
-
 
 class Index(TemplateView):
     """Отображаем первую страницу, выводим первые три продукта в карточки, если база данных не пуста"""
@@ -45,7 +46,27 @@ class ProductDetailView(DetailView):
         version_list = Version.objects.filter(product=context_data['object'])
 
         context_data['version_list'] = version_list
+
         return context_data
+
+
+
+class ProductCreateView(CreateView):
+    """Вью для создания нового продукта"""
+    model = Product
+    form_class = ProductForm
+    template_name = 'catalog/product_create.html'
+    success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+
+        if form.is_valid():
+            new_product = form.save()
+            new_product.slug = slugify(new_product.title)
+            new_product.seller = self.request.user
+            new_product.save()
+
+            return super().form_valid(form)
 
 
 class ProductUpdateView(UpdateView):
@@ -63,21 +84,18 @@ class ProductUpdateView(UpdateView):
             return super().form_valid(form)
 
 
-class ProductCreateView(CreateView):
-    """Вью для создания нового продукта"""
+class ProductUpdateViewForModerator(UpdateView):
+    """Вью для обновления данных продукта"""
     model = Product
-    form_class = ProductForm
+    form_class = ProductFormForModerator
     template_name = 'catalog/product_create.html'
     success_url = reverse_lazy('index')
 
     def form_valid(self, form):
-        print('sldkfj')
         if form.is_valid():
             new_product = form.save()
-            new_product.slug = slugify(new_product.title)
-            new_product.seller = self.request.user
+            new_product.last_changing_date = datetime.now()
             new_product.save()
-
             return super().form_valid(form)
 
 
@@ -93,11 +111,6 @@ class VersionCreateView(CreateView):
     form_class = VersionForm
     template_name = 'catalog/version_create.html'
     success_url = reverse_lazy('index')
-
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        print('ja context data')
-        return data
 
     def form_valid(self, form):
         if form.is_valid():
