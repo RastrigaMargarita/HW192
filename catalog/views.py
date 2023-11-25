@@ -8,6 +8,7 @@ from pytils.translit import slugify
 import user
 from catalog.forms import ProductForm, VersionForm, ProductFormForModerator
 from catalog.models import Usercontact, Product, Version
+from services import get_catalog_list
 
 class Index(TemplateView):
     """Отображаем первую страницу, выводим первые три продукта в карточки, если база данных не пуста"""
@@ -17,7 +18,8 @@ class Index(TemplateView):
         context_data = super().get_context_data(**kwargs)
         context_data['product_list'] = Product.objects.all()
         version_data = Version.objects.all()
-
+        category_list = get_catalog_list()
+        print(category_list)
         for product in context_data['product_list']:
             product.active_version_number = ""
             product.active_version_name = ""

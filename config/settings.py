@@ -11,9 +11,13 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+dot_env = os.path.join(BASE_DIR, '.envir')
+load_dotenv(dotenv_path=dot_env)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -80,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'magazin',
         'USER': 'postgres',
-        'PASSWORD': '123'
+        'PASSWORD': os.getenv('DB_PASSWORD')
     }
 }
 
@@ -102,6 +106,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CACHE_ENABLED = os.getenv('CACHE_ENABLED')
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379'
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -132,18 +144,10 @@ AUTH_USER_MODEL = 'user.User'
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
-EMAIL_HOST = 'smtp.mail.ru'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'rme1C@mail.ru'
-EMAIL_HOST_PASSWORD = 'CcgfzMk2dYYhhfmgaBLK'
-DEFAULT_FROM_EMAIL = 'RME1C@mail.ru'
-#EMAIL_USE_TLS = True
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+
 EMAIL_USE_SSL = True
-
-
-#EMAIL_HOST = 'smtp.aol.com'
-#EMAIL_PORT = 465
-#EMAIL_HOST_USER = 'webrastr@aol.com'
-#EMAIL_HOST_PASSWORD = '3B&&4&be>%4uu;T'
-#DEFAULT_FROM_EMAIL = ''
-#EMAIL_USE_SSL = True
